@@ -13,11 +13,15 @@ will win itself.
 
 #use "init.ml";;
 #use "print.ml";;
+#use "boardmanip.ml";;
 
 let main = fun () ->
 	let n = read_int () in
 
-	print_board (init_board n) n
+	let board = init_board n in
+
+	let _ = print_board (board) n in
+	whatis board 1 1
 ;;
 
 main ();;
