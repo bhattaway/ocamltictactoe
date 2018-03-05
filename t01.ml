@@ -21,11 +21,15 @@ let main = fun () ->
 
 	let board = init_board n in
 
+	play board n
+
+(*
 	let _ = print_board board n in
 	let _ = whatis board 1 1 in
 	let newboard0 = place_piece board 1 1 'X' [] in
 	let _ = print_board newboard0 n in
 	get_human_input newboard0 n
+	*)
 
 ;;
 

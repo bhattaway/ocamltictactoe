@@ -5,16 +5,18 @@ Author: Brandon Hattaway
 
 *)
 
-let rec find_col = fun (x::xs) -> fun col ->
-	match col with
-	0 -> x
-	|	col -> find_col xs (col-1)
+let rec find_col = fun boardrow -> fun col ->
+	match col, boardrow with
+	_, [] -> '?'
+	|	0, x::xs -> x
+	|	col, x::xs -> find_col xs (col-1)
 ;;
 
-let rec find_row = fun (boardrow::boardrows) -> fun row -> fun col ->
-	match row with
-	0 -> find_col boardrow col
-	|	row -> find_row boardrows (row-1) col
+let rec find_row = fun board -> fun row -> fun col ->
+	match row, board with
+	_, [] -> '?'
+	|	0, x::xs -> find_col x col
+	|	row, x::xs -> find_row xs (row-1) col
 ;;
 
 (*
@@ -31,6 +33,7 @@ let rec edit_row = fun boardrow -> fun col -> fun piece -> fun newrow ->
 	|	col, (x::xs) -> edit_row xs (col-1) piece (newrow@[x])
 ;;
 
+(* places a piece at row,col and returns the new board *)
 let rec place_piece = fun board -> fun row -> fun col -> fun piece -> fun newboard ->
 	match row, board with
 	_, [] -> newboard

@@ -9,6 +9,15 @@ defines how turns work and how playing the game occurs
 
 #use "boardmanip.ml";;
 
+exception IgnoreCase;;
+
+let rec at = fun list -> fun i ->
+	match i, list with
+	0, x::xs -> x
+	|	i, x::xs -> at xs (i-1)
+	|	_,_ -> raise IgnoreCase
+;;
+
 let is_in_bounds = fun n -> fun row -> fun col ->
 	((0 <= row) && (row < n)) && ((0 <= col) && (col < n))
 ;;
@@ -29,19 +38,24 @@ let rec get_human_input = fun board -> fun n ->
 		get_human_input board n
 ;;
 
-(*
 let rec do_human_turn = fun board -> fun n ->
-	let _ = check_end_of_game board n
-	(* get input *)
-
-
+	let _ = print_board board n in
+	let human_input = get_human_input board n in
+	let row = at human_input 0 in
+	let col = at human_input 1 in
+	let newboard = place_piece board row col 'X' [] in
+	do_robot_turn newboard n
 and
 
 do_robot_turn = fun board -> fun n ->
-
+	let _ = print_board board n in
+	let human_input = get_human_input board n in
+	let row = at human_input 0 in
+	let col = at human_input 1 in
+	let newboard = place_piece board row col 'O' [] in
+	do_human_turn newboard n
 ;;
 
 let play = fun board -> fun n ->
-	do_turn board n
+	do_human_turn board n
 ;;
-*)
