@@ -8,6 +8,7 @@ defines how turns work and how playing the game occurs
 *)
 
 #use "boardmanip.ml";;
+#use "finishgame.ml";;
 
 let is_in_bounds = fun n -> fun row -> fun col ->
 	((0 <= row) && (row < n)) && ((0 <= col) && (col < n))
@@ -35,7 +36,13 @@ let rec do_human_turn = fun board -> fun n ->
 	let row = at human_input 0 in
 	let col = at human_input 1 in
 	let newboard = place_piece board row col 'X' [] in
-	do_robot_turn newboard n
+	if is_space_avaliable newboard n (n-1) (n-1) then
+		do_robot_turn newboard n
+	else
+		let _ = print_char ('\n') in
+		let _ = print_board newboard n in
+		Printf.printf("it's a draw\n")
+
 and
 
 do_robot_turn = fun board -> fun n ->
@@ -44,7 +51,12 @@ do_robot_turn = fun board -> fun n ->
 	let row = at human_input 0 in
 	let col = at human_input 1 in
 	let newboard = place_piece board row col 'O' [] in
-	do_human_turn newboard n
+	if is_space_avaliable newboard n (n-1) (n-1) then
+		do_human_turn newboard n
+	else
+		let _ = print_char ('\n') in
+		let _ = print_board newboard n in
+		Printf.printf("it's a draw\n")
 ;;
 
 let play = fun board -> fun n ->
