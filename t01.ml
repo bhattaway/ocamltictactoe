@@ -19,19 +19,13 @@ will win itself.
 let main = fun () ->
 	let n = read_int () in
 
+	let listofholes = get_ints [] in
+
 	let board = init_board n in
 
-	play board n
+	let holyboard = add_holes board listofholes in
 
-(* TEST CODE *)
-(*
-	let _ = print_board board n in
-	let _ = whatis board 1 1 in
-	let newboard0 = place_piece board 1 1 'X' [] in
-	let _ = print_board newboard0 n in
-	get_human_input newboard0 n
-	*)
-
+	play holyboard n
 ;;
 
 main ();;
