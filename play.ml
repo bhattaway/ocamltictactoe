@@ -9,6 +9,7 @@ defines how turns work and how playing the game occurs
 
 #use "boardmanip.ml";;
 #use "finishgame.ml";;
+#use "ai.ml";;
 
 let is_in_bounds = fun n -> fun row -> fun col ->
 	((0 <= row) && (row < n)) && ((0 <= col) && (col < n))
@@ -32,6 +33,7 @@ let rec get_human_input = fun board -> fun n ->
 
 let rec do_human_turn = fun board -> fun n ->
 	let _ = print_board board n in
+	let _ = Printf.printf("\nhuman's turn\n") in
 	let human_input = get_human_input board n in
 	let row = at human_input 0 in
 	let col = at human_input 1 in
@@ -39,7 +41,7 @@ let rec do_human_turn = fun board -> fun n ->
 	if is_win newboard n 'X' then
 		let _ = print_char ('\n') in
 		let _ = print_board newboard n in
-		Printf.printf("player wins\n")
+		Printf.printf("human wins\n")
 	else if is_space_avaliable newboard n (n-1) (n-1) then
 		do_robot_turn newboard n
 	else
@@ -50,10 +52,12 @@ let rec do_human_turn = fun board -> fun n ->
 and
 
 do_robot_turn = fun board -> fun n ->
+
 	let _ = print_board board n in
-	let human_input = get_human_input board n in
-	let row = at human_input 0 in
-	let col = at human_input 1 in
+	let _ = Printf.printf("\nOCAML's turn\n") in
+	let robot_input = robot_move board n in
+	let row = at robot_input 0 in
+	let col = at robot_input 1 in
 	let newboard = place_piece board row col 'O' [] in
 	if is_win newboard n 'O' then
 		let _ = print_char ('\n') in
