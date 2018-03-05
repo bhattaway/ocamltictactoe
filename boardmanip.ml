@@ -5,18 +5,21 @@ Author: Brandon Hattaway
 
 *)
 
-let rec find_col = fun boardrow -> fun col ->
-	match col, boardrow with
-	_, [] -> '?'
-	|	0, x::xs -> x
-	|	col, x::xs -> find_col xs (col-1)
+exception IgnoreCase;;
+
+let rec at = fun list -> fun i ->
+	match i, list with
+	0, x::xs -> x
+	|	i, x::xs -> at xs (i-1)
+	|	_,_ -> raise IgnoreCase
 ;;
 
-let rec find_row = fun board -> fun row -> fun col ->
-	match row, board with
-	_, [] -> '?'
-	|	0, x::xs -> find_col x col
-	|	row, x::xs -> find_row xs (row-1) col
+let find_col = fun boardrow -> fun col ->
+	at boardrow col
+;;
+
+let find_row = fun board -> fun row -> fun col ->
+	find_col (at board row) col
 ;;
 
 (*
@@ -40,10 +43,3 @@ let rec place_piece = fun board -> fun row -> fun col -> fun piece -> fun newboa
 	|	0, (boardrow::boardrows) -> place_piece boardrows (row-1) col piece (newboard@[edit_row boardrow col piece []])
 	|	row, (boardrow::boardrows) -> place_piece boardrows (row-1) col piece (newboard@[boardrow])
 ;;
-
-(*
-let place_piece = fun board -> fun n -> fun row -> fun col -> fun piece
-	match row, col with
-	0, 0 -> piece::
-	*)
-	

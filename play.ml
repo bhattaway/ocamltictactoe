@@ -9,15 +9,6 @@ defines how turns work and how playing the game occurs
 
 #use "boardmanip.ml";;
 
-exception IgnoreCase;;
-
-let rec at = fun list -> fun i ->
-	match i, list with
-	0, x::xs -> x
-	|	i, x::xs -> at xs (i-1)
-	|	_,_ -> raise IgnoreCase
-;;
-
 let is_in_bounds = fun n -> fun row -> fun col ->
 	((0 <= row) && (row < n)) && ((0 <= col) && (col < n))
 ;;

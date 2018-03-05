@@ -23,6 +23,7 @@ let main = fun () ->
 
 	play board n
 
+(* TEST CODE *)
 (*
 	let _ = print_board board n in
 	let _ = whatis board 1 1 in
