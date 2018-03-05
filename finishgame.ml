@@ -69,8 +69,18 @@ let rec is_BR_to_UL_diagonal_win = fun board -> fun row -> fun piece ->
 					false
 ;;
 
+let rec is_BL_to_UR_diagonal_win = fun board -> fun n -> fun row -> fun piece ->
+	match row with
+	0 -> (whatis board 0 (n-1) = piece)
+	|	row -> if (whatis board row (n-1-row) = piece) then
+					is_BL_to_UR_diagonal_win board n (row-1) piece
+				else
+					false
+;;
+
 let is_diagonal_win = fun board -> fun n -> fun row -> fun col -> fun piece ->
-	is_BR_to_UL_diagonal_win board (n-1) piece
+	is_BR_to_UL_diagonal_win board (n-1) piece ||
+	is_BL_to_UR_diagonal_win board n (n-1) piece
 ;;
 
 let is_win = fun board -> fun n -> fun piece ->
