@@ -21,7 +21,9 @@ let main = fun () ->
 	let board = init_board n in
 
 	let _ = print_board (board) n in
-	whatis board 1 1
+	let _ = whatis board 1 1 in
+	let newboard0 = place_piece board 1 1 'X' [] in
+	print_board (newboard0) n
 ;;
 
 main ();;
