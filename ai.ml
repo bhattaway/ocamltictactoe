@@ -71,9 +71,26 @@ let rec winning_col_spot = fun board -> fun n -> fun piece -> fun row -> fun col
 					winning_col_spot board n piece (n-1) (col-1) (-1)
 ;;
 
+let rec winning_BR_to_UL_diag_spot = fun board -> fun n -> fun piece -> fun row -> fun rowspot ->
+	match row with
+	0 -> if (whatis board 0 0 = piece) then
+				[rowspot; rowspot]
+			else if  (whatis board 0 0 = ' ') && (rowspot = -1) then
+				[0; 0]
+			else
+				[-1; -1]
+	|	row -> if (whatis board row row = piece) then
+						winning_BR_to_UL_diag_spot board n piece (row-1) rowspot
+				else if (whatis board row row = ' ') && (rowspot = -1) then
+						winning_BR_to_UL_diag_spot board n piece (row-1) row
+				else
+					[-1; -1]
+;;
+
 let winning_spots = fun board -> fun n -> fun piece ->
 	((winning_row_spot board n piece (n-1) (n-1) (-1))
 	@(winning_col_spot board n piece (n-1) (n-1) (-1))
+	@(winning_BR_to_UL_diag_spot board n piece (n-1) (-1))
 	)
 	(*
 	@(winning_BR_to_UL_diag_spot)@(winning_BL_to_UR_diag_spot)
