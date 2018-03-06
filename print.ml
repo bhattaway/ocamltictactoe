@@ -7,6 +7,9 @@ handles printing the tictactoe board
 
 *)
 
+(*
+handles rows that contain board data, of the form X| |O
+*)
 let rec print_cells = fun list ->
 	match list with
 	[] -> ()
@@ -22,6 +25,9 @@ let rec print_cells = fun list ->
 					print_cells xs
 ;;
 
+(*
+handles rows of the form -+-+-
+*)
 let rec print_filler_dashes = fun n ->
 	match n with
 	0 -> ()
@@ -35,6 +41,11 @@ and
 				print_filler_dashes n
 ;;
 
+(*
+prints each row. print_row handles the rows with board data in them, (i.e. X| |O)
+
+print_filler handles the rows inbetween (i.e. -+-+-)
+*)
 let rec print_row = fun board -> fun n ->
 	match board with
 	[] -> ()
