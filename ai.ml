@@ -70,6 +70,7 @@ let rec find_move = fun list ->
 
 let robot_move = fun board -> fun n ->
 	let move_list = ((winning_spots board n 'O')
+					@(winning_spots board n 'X')
 					@(default_move board n (n-1) (n-1))
 					) in
 
