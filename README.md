@@ -33,18 +33,13 @@ example: an input of
 will yield a 4x4 board with holes at (0,3) (the upper right corner)
 and (1,1), full starting board shown below:
 
+//idk how to make this show up properly in the readme aaaaaaaaa
  | | |@
-
 -+-+-+-
-
  |@| |
- 
 -+-+-+-
-
  | | |
-
 -+-+-+-
-
  | | |
 
 for a regular, 3x3 game board with no holes, input
