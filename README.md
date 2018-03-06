@@ -5,6 +5,10 @@ nxn tic tac toe, player vs the computer, where the computer will have the
 capability to look ahead one move to prevent the human from winning, or
 will win itself.
 
+how to run: 
+
+ocaml t01.ml
+
 the program starts by asking for input from the user;
 
 the first input is n, which decides the board size (nxn)
@@ -28,12 +32,19 @@ example: an input of
 
 will yield a 4x4 board with holes at (0,3) (the upper right corner)
 and (1,1), full starting board shown below:
+
  | | |@
+
 -+-+-+-
+
  |@| |
+ 
 -+-+-+-
+
  | | |
+
 -+-+-+-
+
  | | |
 
 for a regular, 3x3 game board with no holes, input
