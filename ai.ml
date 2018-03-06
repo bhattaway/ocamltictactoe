@@ -42,19 +42,41 @@ let rec winning_row_spot = fun board -> fun n -> fun piece -> fun row -> fun col
 			else
 				winning_row_spot board n piece (row-1) (n-1) (-1)
 	|	col -> if (whatis board row col = piece) then
-						winning_row_spot board n piece row (col-1) colspot
-					else if (whatis board row col = ' ') && (colspot = -1) then
-							winning_row_spot board n piece row (col-1) col
-					else if (row = 0) then
-						[-1; -1]
-					else
-						winning_row_spot board n piece (row-1) (n-1) (-1)
+					winning_row_spot board n piece row (col-1) colspot
+				else if (whatis board row col = ' ') && (colspot = -1) then
+						winning_row_spot board n piece row (col-1) col
+				else if (row = 0) then
+					[-1; -1]
+				else
+					winning_row_spot board n piece (row-1) (n-1) (-1)
+;;
+
+let rec winning_col_spot = fun board -> fun n -> fun piece -> fun row -> fun col -> fun rowspot ->
+	match row with
+	0 -> if (whatis board row col = piece) then
+				[rowspot; col]
+			else if  (whatis board row col = ' ') && (rowspot = -1) then
+				[row; col]
+			else if (col = 0) then
+				[-1; -1]
+			else
+				winning_col_spot board n piece (n-1) (col-1) (-1)
+	|	row -> if (whatis board row col = piece) then
+						winning_col_spot board n piece (row-1) col rowspot
+				else if (whatis board row col = ' ') && (rowspot = -1) then
+						winning_col_spot board n piece (row-1) col row
+				else if (col = 0) then
+					[-1; -1]
+				else
+					winning_col_spot board n piece (n-1) (col-1) (-1)
 ;;
 
 let winning_spots = fun board -> fun n -> fun piece ->
-	(winning_row_spot board n piece (n-1) (n-1) (-1))
+	((winning_row_spot board n piece (n-1) (n-1) (-1))
+	@(winning_col_spot board n piece (n-1) (n-1) (-1))
+	)
 	(*
-	@(winning_col_spot)@(winning_BR_to_UL_diag_spot)@(winning_BL_to_UR_diag_spot)
+	@(winning_BR_to_UL_diag_spot)@(winning_BL_to_UR_diag_spot)
 	*)
 ;;
 
